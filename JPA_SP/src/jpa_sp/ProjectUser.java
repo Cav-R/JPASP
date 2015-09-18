@@ -32,21 +32,20 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "ProjectUser.findAll", query = "SELECT p FROM ProjectUser p"),
-    @NamedQuery(name = "ProjectUser.findByProjectid", query = "SELECT p FROM ProjectUser p WHERE p.projectid = :projectid"),
+    @NamedQuery(name = "ProjectUser.findByProjectUserid", query = "SELECT p FROM ProjectUser p WHERE p.projectUserid = :projectUserid"),
     @NamedQuery(name = "ProjectUser.findByUserName", query = "SELECT p FROM ProjectUser p WHERE p.userName = :userName"),
     @NamedQuery(name = "ProjectUser.findByEmail", query = "SELECT p FROM ProjectUser p WHERE p.email = :email"),
     @NamedQuery(name = "ProjectUser.findByCreated", query = "SELECT p FROM ProjectUser p WHERE p.created = :created")})
 public class ProjectUser implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "Project_id")
-    private Long projectid;
+    @Column(name = "ProjectUser_id")
+    private Long projectUserid;
     @Column(name = "UserName")
     private String userName;
-    @Column(name = "Email")
+    @Column(name = "email")
     private String email;
     @Column(name = "Created")
     @Temporal(TemporalType.DATE)
@@ -57,20 +56,16 @@ public class ProjectUser implements Serializable {
     public ProjectUser() {
     }
 
-    public List<Project> getProjectList() {
-        return projectList;
+    public ProjectUser(Long projectUserid) {
+        this.projectUserid = projectUserid;
     }
 
-    public ProjectUser(Long projectid) {
-        this.projectid = projectid;
+    public Long getProjectUserid() {
+        return projectUserid;
     }
 
-    public Long getProjectid() {
-        return projectid;
-    }
-
-    public void setProjectid(Long projectid) {
-        this.projectid = projectid;
+    public void setProjectUserid(Long projectUserid) {
+        this.projectUserid = projectUserid;
     }
 
     public String getUserName() {
@@ -100,7 +95,7 @@ public class ProjectUser implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (projectid != null ? projectid.hashCode() : 0);
+        hash += (projectUserid != null ? projectUserid.hashCode() : 0);
         return hash;
     }
 
@@ -111,7 +106,7 @@ public class ProjectUser implements Serializable {
             return false;
         }
         ProjectUser other = (ProjectUser) object;
-        if ((this.projectid == null && other.projectid != null) || (this.projectid != null && !this.projectid.equals(other.projectid))) {
+        if ((this.projectUserid == null && other.projectUserid != null) || (this.projectUserid != null && !this.projectUserid.equals(other.projectUserid))) {
             return false;
         }
         return true;
@@ -119,7 +114,7 @@ public class ProjectUser implements Serializable {
 
     @Override
     public String toString() {
-        return "jpa_sp.ProjectUser[ projectid=" + projectid + " ]";
+        return "jpa_sp.ProjectUser[ projectUserid=" + projectUserid + " ]";
     }
-
+    
 }

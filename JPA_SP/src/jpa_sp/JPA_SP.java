@@ -20,45 +20,16 @@ public class JPA_SP {
      */
     public static void main(String[] args) {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA_SPPU");
-        EntityManager em = emf.createEntityManager();
-        Project p1 = new Project();
-        Project p2 = new Project();
-        p1.setName("Test");
-        p2.setName("Java");
 
-        ProjectUser pu1 = new ProjectUser();
-        ProjectUser pu2 = new ProjectUser();
-        pu1.setUserName("Bob");
-        pu2.setUserName("Alex");
+        Facade f = new Facade(emf);
 
-        Task t1 = new Task();
-        Task t2 = new Task();
-        t2.setName("JavaTask");
-        t1.setName("TestTask");
-        t2.setProjectid(p1.getProjectid());
-        t2.setProjectid(p2.getProjectid());
-
-        em.getTransaction().begin();
-        em.merge(p1);
-        em.merge(p2);
-        em.merge(pu1);
-        em.merge(pu2);
-        em.merge(t1);
-        em.merge(t2);
-//        em.persist(p1);
-//        em.persist(p2);
-//        em.persist(pu2);
-//        em.persist(pu1);
-        em.getTransaction().commit();
-
-//        Query q = em.createNamedQuery("Project.findByProjectId");
-//        q.setParameter("projectId", 1);
-//        Project project = (Project) q.getSingleResult();
-//        Project p = em.find(Project.class, 1L);
-//
-        em.close();
-//        System.out.println("P Name :" + project.getName());
-//        System.out.println("Project user = " + p.getUserList().get(0).getUsername() + ", Project name = " + p.getName());
+        ProjectUser pu = f.createUser("Jenny", "Jenny@hot.dk");
+        f.createUser("Benny", "Benny@hot.dk");
+        System.out.println("Find User metode: " + f.findUser(1l).getUserName());
+        
+        for (ProjectUser user  : f.getallUser()) {
+            System.out.println("GetallUser metode: " + user.getUserName()+ " - " + user.getEmail());
+        }
     }
 
 }
